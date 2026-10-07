@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitudes Académicas — UNIMINUTO Sede Tolima - Huila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <aside class="side" aria-label="Filtros">
+    <div class="brand">
+      <h1>Solicitudes Académicas</h1>
+      <p>Registro y Control Académico, UNIMINUTO Sede Tolima - Huila</p>
+      <span class="corte" id="corte"><i></i>Corte</span>
+    </div>
+    <div id="filters"></div>
+    <div class="fgroup">
+      <h2>Programa<small id="progSel">Todos</small></h2>
+      <select id="progFilter" class="side-select" aria-label="Filtrar por programa"></select>
+    </div>
+    <button class="reset" id="resetBtn" type="button">Limpiar filtros</button>
+    <p class="side-note">Dentro de un mismo filtro se suman las opciones; entre filtros se combinan. Los números indican cuántas solicitudes quedan con los demás filtros aplicados.</p>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <h2>Seguimiento de solicitudes académicas abiertas</h2>
+        <p>Cada registro es una solicitud radicada por un estudiante que sigue en gestión a la fecha de corte.</p>
+      </div>
+      <div class="showing" id="showing"></div>
+    </div>
+
+    <section class="kpis" id="kpis" aria-label="Indicadores"></section>
+
+    <section class="card span12 block">
+      <h3>Semáforo de vencimiento</h3>
+      <div class="sub">Días calendario que faltan para la fecha de vencimiento de cada solicitud, contados desde la fecha de corte</div>
+      <div class="stage-bar" id="stageBar" role="img" aria-label="Distribución por tiempo restante para el vencimiento"></div>
+      <div class="stage-legend five" id="stageLegend"></div>
+    </section>
+
+    <section class="grid">
+      <div class="card span7">
+        <h3>Solicitudes por Centro Universitario</h3>
+        <div class="sub">Separadas según el tiempo que falta para su vencimiento</div>
+        <div class="chart-box tall"><canvas id="cuChart"></canvas></div>
+      </div>
+      <div class="card span5">
+        <h3>Puntos de atención</h3>
+        <div class="sub">Lectura automática de los datos filtrados</div>
+        <ul class="alerts" id="alerts"></ul>
+      </div>
+
+      <div class="card span12">
+        <h3>Calendario de vencimientos</h3>
+        <div class="sub" id="venSub">Solicitudes que vencen cada semana, por Centro Universitario. Muestra la carga de respuestas que se viene.</div>
+        <div class="chart-box tall"><canvas id="venChart"></canvas></div>
+      </div>
+
+      <div class="card span7">
+        <h3>Tipo de solicitud</h3>
+        <div class="sub">Solicitudes abiertas por tipo. Pase el cursor para ver el plazo de respuesta establecido.</div>
+        <div class="chart-box"><canvas id="tipoChart"></canvas></div>
+      </div>
+      <div class="card span5">
+        <h3>Estado en el sistema</h3>
+        <div class="sub">Código de estado de la solicitud en SAP</div>
+        <div class="chart-box"><canvas id="estChart"></canvas></div>
+      </div>
+
+      <div class="card span12">
+        <h3>Ritmo de radicación por semana</h3>
+        <div class="sub">Solicitudes abiertas según la semana en que se recibieron, con el acumulado</div>
+        <div class="chart-box tall"><canvas id="recChart"></canvas></div>
+      </div>
+    </section>
+
+    <section class="card span12 block">
+      <h3>Solicitudes por programa y Centro Universitario</h3>
+      <div class="sub">El número es la cantidad de solicitudes abiertas. El color indica qué tan cerca está la más próxima a vencer.</div>
+      <div class="legend">
+        <span><b class="sw" style="background:#A8553F"></b>Vencida o vence en 7 días o menos</span>
+        <span><b class="sw" style="background:#E2962B"></b>8 a 15 días</span>
+        <span><b class="sw" style="background:#F4DDB6"></b>16 a 30 días</span>
+        <span><b class="sw" style="background:#DDEDE8"></b>Más de 30 días</span>
+      </div>
+      <div class="tbl-wrap"><table id="matrix"></table></div>
+    </section>
+
+    <section class="card span12 block">
+      <h3>Detalle por programa</h3>
+      <div class="sub">Haga clic en un encabezado para ordenar.</div>
+      <div class="tools">
+        <input type="search" id="search" placeholder="Buscar programa" aria-label="Buscar programa">
+        <button class="btn" id="csvBtn" type="button">Descargar CSV</button>
+      </div>
+      <div class="tbl-wrap"><table id="detail"></table></div>
+    </section>
+
+    <p class="footer" id="footer"></p>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
